@@ -224,6 +224,25 @@ public sealed class XrpcClientTests
         Assert.Equal("Bearer token", handler.Request!.Headers.Authorization!.ToString());
     }
 
+    [Theory]
+    [InlineData("bad")]
+    [InlineData("com.example.")]
+    [InlineData("-com.example.query")]
+    [InlineData("com.-example.query")]
+    [InlineData("com.example.query-qux")]
+    [InlineData("com.example.query/name")]
+    public async Task Invalid_nsid_is_rejected_before_sending(string nsid)
+    {
+        var handler = new RecordingHandler(_ => JsonResponse("{}"));
+        using var httpClient = CreateHttpClient(handler);
+        var client = new XrpcClient(httpClient);
+
+        await Assert.ThrowsAsync<ArgumentException>(() =>
+            client.QueryAsync<JsonElement>(nsid));
+
+        Assert.Null(handler.Request);
+    }
+
     private static HttpClient CreateHttpClient(RecordingHandler handler) =>
         new(handler)
         {

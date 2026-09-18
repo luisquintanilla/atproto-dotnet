@@ -495,11 +495,38 @@ public sealed class XrpcClient
             throw new ArgumentException("An NSID is required.", nameof(nsid));
         }
 
-        if (nsid.IndexOfAny(['/', '\\', '?', '#']) >= 0)
+        string[] segments = nsid.Split('.');
+        if (nsid.Length > 317
+            || segments.Length < 3
+            || segments.Any(static segment => segment.Length == 0 || segment.Length > 63))
         {
-            throw new ArgumentException("An NSID must be a single path segment.", nameof(nsid));
+            throw new ArgumentException("The NSID has an invalid structure.", nameof(nsid));
+        }
+
+        for (var index = 0; index < segments.Length; index++)
+        {
+            string segment = segments[index];
+            bool isName = index == segments.Length - 1;
+            if (!IsAsciiLetter(segment[0])
+                || segment.Any(character => isName
+                    ? !IsAsciiLetterOrDigit(character)
+                    : !IsAsciiLetterOrDigit(character) && character != '-'))
+            {
+                throw new ArgumentException("The NSID contains invalid characters.", nameof(nsid));
+            }
+
+            if (!isName && (segment[0] == '-' || segment[^1] == '-'))
+            {
+                throw new ArgumentException("An NSID authority segment cannot start or end with a hyphen.", nameof(nsid));
+            }
         }
     }
+
+    private static bool IsAsciiLetter(char value) =>
+        (value >= 'A' && value <= 'Z') || (value >= 'a' && value <= 'z');
+
+    private static bool IsAsciiLetterOrDigit(char value) =>
+        IsAsciiLetter(value) || (value >= '0' && value <= '9');
 
     private static string BuildQueryString(object? parameters)
     {

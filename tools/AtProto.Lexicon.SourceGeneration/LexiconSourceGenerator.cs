@@ -426,14 +426,26 @@ public sealed class LexiconSourceGenerator : IIncrementalGenerator
     private static bool IsValidNsid(string value)
     {
         var segments = value.Split('.');
-        if (segments.Length < 3 || segments.Any(static segment => segment.Length == 0))
+        if (value.Length > 317
+            || segments.Length < 3
+            || segments.Any(static segment => segment.Length == 0 || segment.Length > 63))
         {
             return false;
         }
 
-        foreach (var segment in segments)
+        for (var index = 0; index < segments.Length; index++)
         {
-            if (!char.IsLetter(segment[0]) || segment.Any(static character => !(char.IsLetterOrDigit(character) || character == '-')))
+            var segment = segments[index];
+            var isName = index == segments.Length - 1;
+            if (!IsAsciiLetter(segment[0])
+                || segment.Any(character => isName
+                    ? !IsAsciiLetterOrDigit(character)
+                    : !IsAsciiLetterOrDigit(character) && character != '-'))
+            {
+                return false;
+            }
+
+            if (!isName && (segment[0] == '-' || segment[segment.Length - 1] == '-'))
             {
                 return false;
             }
@@ -441,6 +453,12 @@ public sealed class LexiconSourceGenerator : IIncrementalGenerator
 
         return true;
     }
+
+    private static bool IsAsciiLetter(char value) =>
+        (value >= 'A' && value <= 'Z') || (value >= 'a' && value <= 'z');
+
+    private static bool IsAsciiLetterOrDigit(char value) =>
+        IsAsciiLetter(value) || (value >= '0' && value <= '9');
 
     private static bool IsValidIdentifier(string value)
     {
