@@ -1,0 +1,5 @@
+* text=auto
+
+tests/fixtures/**/*.json text eol=lf
+tests/fixtures/**/*.car binary
+tests/fixtures/**/*.bin binary

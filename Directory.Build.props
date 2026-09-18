@@ -1,0 +1,27 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+
+  <!-- Shared metadata for the reusable libraries. Projects opt into packing explicitly. -->
+  <PropertyGroup Label="Package metadata">
+    <IsPackable>false</IsPackable>
+    <Product>atproto-dotnet</Product>
+    <Authors>Luis Quintanilla</Authors>
+    <Company>Luis Quintanilla</Company>
+    <Copyright>Copyright (c) 2026 Luis Quintanilla</Copyright>
+    <PackageProjectUrl>https://github.com/luisquintanilla/atproto-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/luisquintanilla/atproto-dotnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>atproto;at-protocol;bluesky;decentralized;fediverse;dotnet</PackageTags>
+    <Version>0.3.0-preview.1</Version>
+  </PropertyGroup>
+</Project>
