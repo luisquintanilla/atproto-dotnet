@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/src/core/">
+    <Project Path="src/core/AtProto.Cid/AtProto.Cid.csproj" />
+    <Project Path="src/core/AtProto.Cbor/AtProto.Cbor.csproj" />
+    <Project Path="src/core/AtProto.Car/AtProto.Car.csproj" />
+    <Project Path="src/core/AtProto.Crypto/AtProto.Crypto.csproj" />
+    <Project Path="src/core/AtProto.Repo/AtProto.Repo.csproj" />
+    <Project Path="src/core/AtProto.Identity/AtProto.Identity.csproj" />
+    <Project Path="src/core/AtProto.Lexicon/AtProto.Lexicon.csproj" />
+    <Project Path="src/core/AtProto.Firehose/AtProto.Firehose.csproj" />
+    <Project Path="src/core/AtProto.OAuth/AtProto.OAuth.csproj" />
+    <Project Path="src/core/AtProto.Xrpc/AtProto.Xrpc.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AtProto.Core.Tests/AtProto.Core.Tests.csproj" />
+    <Project Path="tests/AtProto.Firehose.Tests/AtProto.Firehose.Tests.csproj" />
+    <Project Path="tests/AtProto.Fixtures.Tests/AtProto.Fixtures.Tests.csproj" />
+    <Project Path="tests/AtProto.OAuth.Tests/AtProto.OAuth.Tests.csproj" />
+    <Project Path="tests/AtProto.Lexicon.CodeGen.Tests/AtProto.Lexicon.CodeGen.Tests.csproj" />
+    <Project Path="tests/AtProto.Lexicon.SourceGeneration.Tests/AtProto.Lexicon.SourceGeneration.Tests.csproj" />
+    <Project Path="tests/AtProto.Xrpc.Tests/AtProto.Xrpc.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/AtProto.Fixtures.Tool/AtProto.Fixtures.Tool.csproj" />
+    <Project Path="tools/AtProto.Lexicon.CodeGen/AtProto.Lexicon.CodeGen.csproj" />
+    <Project Path="tools/AtProto.Lexicon.SourceGeneration/AtProto.Lexicon.SourceGeneration.csproj" />
+  </Folder>
+</Solution>
