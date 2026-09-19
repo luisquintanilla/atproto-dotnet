@@ -20,8 +20,12 @@ not require .NET Aspire or any service stack.
 | `AtProto.Xrpc` | Framework-neutral HTTP client for XRPC queries and procedures |
 | `AtProto.Lexicon.SourceGeneration` | Roslyn source generation for Lexicon schemas |
 
-The initial extracted release is `0.3.0-preview.1`. Preview packages are
-published to [GitHub Packages](https://github.com/luisquintanilla/atproto-dotnet/packages).
+The initial extracted release is `0.3.0-preview.1`. The release workflow packs
+and publishes all 11 packages to
+[GitHub Packages](https://github.com/luisquintanilla/atproto-dotnet/packages)
+when a `v*` tag is pushed or the workflow is manually dispatched. GitHub
+Packages NuGet packages are private by default; after the first publication,
+set each package's visibility to **Public** in its package settings.
 
 ## Build
 

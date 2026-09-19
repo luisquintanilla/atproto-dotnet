@@ -22,3 +22,18 @@ The current package line is `0.3.0-preview.1` and is distributed through
 [GitHub Packages](https://github.com/luisquintanilla/atproto-dotnet/packages).
 The API surface is still preview quality; pin an exact version when consuming
 the packages.
+
+## Publishing
+
+The `Shared core` workflow packs and publishes all 11 packages listed above.
+Regular pushes and pull requests build, test, and verify the complete package
+set without publishing. Publishing occurs when a `v*` tag is pushed or the
+workflow is manually dispatched.
+
+The test projects and the `AtProto.Fixtures.Tool` and
+`AtProto.Lexicon.CodeGen` command-line projects are intentionally not package
+outputs.
+
+GitHub Packages NuGet packages are private when first published. Set each
+package to **Public** from its package settings after the first publication;
+NuGet package visibility cannot be changed by this workflow's `GITHUB_TOKEN`.

@@ -41,12 +41,44 @@ jobs:
       - name: Pack shared libraries and tools
         run: dotnet pack atproto-dotnet.slnx --configuration Release --no-restore --output artifacts/packages
 
+      - name: Verify complete package set
+        shell: bash
+        run: |
+          expected=(
+            AtProto.Cid
+            AtProto.Cbor
+            AtProto.Car
+            AtProto.Crypto
+            AtProto.Lexicon
+            AtProto.Identity
+            AtProto.Repo
+            AtProto.Firehose
+            AtProto.OAuth
+            AtProto.Xrpc
+            AtProto.Lexicon.SourceGeneration
+          )
+
+          for package in "${expected[@]}"; do
+            if ! compgen -G "artifacts/packages/${package}.*.nupkg" > /dev/null; then
+              echo "::error::Expected package ${package} was not created."
+              exit 1
+            fi
+          done
+
+          package_count=$(find artifacts/packages -maxdepth 1 -type f -name '*.nupkg' ! -name '*.snupkg' | wc -l)
+          if [[ "$package_count" -ne "${#expected[@]}" ]]; then
+            echo "::error::Expected ${#expected[@]} packages, found ${package_count}."
+            exit 1
+          fi
+
       - name: Publish packages to GitHub Packages
         if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: >
-          dotnet nuget push "artifacts/packages/*.nupkg"
-          --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-          --api-key "$NUGET_AUTH_TOKEN"
-          --skip-duplicate
+        run: |
+          for package in artifacts/packages/*.nupkg; do
+            dotnet nuget push "$package" \
+              --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" \
+              --api-key "$NUGET_AUTH_TOKEN" \
+              --skip-duplicate
+          done
